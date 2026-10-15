@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Menu, X, ArrowRight, Building2, Factory } from 'lucide-react';
+import { Phone, Mail, MapPin, Menu, X, ArrowRight } from 'lucide-react';
 import { COMPANY_CONTENT } from '../data/companyContent';
 
 export default function Navbar({ activePage, setActivePage }) {
@@ -20,24 +20,22 @@ export default function Navbar({ activePage, setActivePage }) {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 transition-all duration-300 shadow-sm">
-      {/* Industrial Operations Top Ribbon */}
-      <div className="bg-[#0B132B] text-slate-200 text-xs py-2 px-4 sm:px-8 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3 text-[11px] sm:text-xs">
-            <span className="inline-flex items-center gap-1.5 font-semibold text-brand-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-              COMMERCIAL PROCESSING FACILITY (8–10 MT/HR)
+    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      {/* Top Operations Ribbon (Responsive & No dangling punctuation) */}
+      <div className="bg-[#0B132B] text-slate-200 text-xs py-1.5 px-4 sm:px-8 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+          <div className="flex items-center gap-2 truncate">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+            <span className="font-semibold text-brand-300 truncate">
+              8–10 MT/Hour Processing Plant
             </span>
-            <span className="hidden md:inline text-slate-500">|</span>
-            <span className="hidden md:flex items-center gap-1.5 text-slate-300">
-              <MapPin className="w-3.5 h-3.5 text-brand-400" />
+            <span className="hidden md:inline text-slate-500">•</span>
+            <span className="hidden md:inline text-slate-300">
               {COMPANY_CONTENT.location}
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-[11px] sm:text-xs text-slate-300">
-            <span className="hidden sm:inline text-slate-400">Operations Desk:</span>
+          <div className="flex items-center gap-3 shrink-0">
             <a 
               href={`tel:${COMPANY_CONTENT.phones[0].raw}`} 
               className="font-bold text-white hover:text-brand-300 transition-colors flex items-center gap-1.5"
@@ -45,42 +43,38 @@ export default function Navbar({ activePage, setActivePage }) {
               <Phone className="w-3 h-3 text-brand-400" />
               <span>{COMPANY_CONTENT.phones[0].display}</span>
             </a>
-            <span className="text-slate-600">/</span>
-            <a 
-              href={`tel:${COMPANY_CONTENT.phones[1].raw}`} 
-              className="text-slate-300 hover:text-white transition-colors hidden sm:inline"
-            >
-              <span>{COMPANY_CONTENT.phones[1].display}</span>
-            </a>
           </div>
         </div>
       </div>
 
       {/* Main Corporate Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-6">
-        {/* Brand Logo & Name */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between gap-4">
+        
+        {/* Brand Logo & Name (Big, un-squashed and clearly visible on mobile) */}
         <button
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-3.5 text-left group"
+          className="flex items-center gap-3 text-left focus:outline-none"
         >
-          <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 p-1 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-brand-600 transition-colors">
+          {/* Logo container with fixed aspect ratio so it is NEVER squished */}
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white border-2 border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-sm">
             <img 
               src="/assets/haku-logo.png" 
               alt="Haku Business Group Logo" 
               className="w-full h-full object-contain"
             />
           </div>
-          <div>
-            <div className="text-lg sm:text-xl font-black tracking-tight text-slate-900 group-hover:text-brand-600 transition-colors">
+          
+          <div className="flex flex-col justify-center">
+            <div className="text-base sm:text-xl font-black tracking-tight text-slate-900 leading-tight">
               HAKU <span className="text-brand-600">BUSINESS GROUP</span>
             </div>
-            <div className="text-[11px] font-semibold text-slate-500 tracking-wide uppercase">
-              {COMPANY_CONTENT.subtitle}
+            <div className="text-[10px] sm:text-xs font-semibold text-slate-500 tracking-wide uppercase">
+              Grain Cleaning & Processing
             </div>
           </div>
         </button>
 
-        {/* Industrial Navigation Bar */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = activePage === item.id;
@@ -100,38 +94,41 @@ export default function Navbar({ activePage, setActivePage }) {
           })}
         </nav>
 
-        {/* Right Action CTA (B2B Commercial Inquiries) */}
-        <div className="flex items-center gap-3">
-          <a
-            href={`tel:${COMPANY_CONTENT.phones[0].raw}`}
-            className="hidden sm:inline-flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:border-brand-600 hover:text-brand-600 transition-all"
-          >
-            <Phone className="w-3.5 h-3.5 text-brand-600" />
-            <span>Call Plant</span>
-          </a>
-
+        {/* Right CTA / Mobile Controls */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Desktop "Commercial Inquiries" Button */}
           <button
             onClick={() => handleNavClick('contact')}
-            className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all"
+            className="hidden md:inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-lg shadow-sm transition-all"
           >
             <span>Commercial Inquiries</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
 
-          {/* Mobile Menu Button */}
+          {/* Quick Call Icon Button for Mobile */}
+          <a
+            href={`tel:${COMPANY_CONTENT.phones[0].raw}`}
+            className="md:hidden p-2.5 rounded-lg bg-brand-50 text-brand-600 hover:bg-brand-100 transition-colors"
+            title="Call Facility Operations"
+            aria-label="Call Plant"
+          >
+            <Phone className="w-5 h-5" />
+          </a>
+
+          {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
+            className="lg:hidden p-2.5 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors border border-slate-200"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-slate-900" /> : <Menu className="w-5 h-5 text-slate-900" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (Smooth, high contrast & easy to tap) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 px-6 py-5 shadow-2xl animate-slide-up space-y-2">
+        <div className="lg:hidden bg-white border-t border-slate-200 px-5 py-4 shadow-2xl animate-slide-up space-y-2">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -143,25 +140,25 @@ export default function Navbar({ activePage, setActivePage }) {
               }`}
             >
               <span>{item.label}</span>
-              <ArrowRight className="w-4 h-4 opacity-70" />
+              <ArrowRight className="w-4 h-4 opacity-80" />
             </button>
           ))}
 
-          <div className="pt-4 border-t border-slate-100 space-y-2 text-xs">
-            <div className="font-bold text-slate-400 uppercase tracking-wider">Direct Plant Inquiries</div>
+          <div className="pt-3 border-t border-slate-100 space-y-2 text-xs">
+            <button
+              onClick={() => handleNavClick('contact')}
+              className="w-full py-3 rounded-lg bg-brand-600 text-white font-bold text-sm flex items-center justify-center gap-2"
+            >
+              <span>Commercial Inquiries</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+
             <a
               href={`tel:${COMPANY_CONTENT.phones[0].raw}`}
-              className="flex items-center gap-2 p-3 rounded-lg bg-slate-50 text-slate-800 font-bold"
+              className="flex items-center justify-center gap-2 p-3 rounded-lg bg-slate-100 text-slate-800 font-bold text-sm"
             >
               <Phone className="w-4 h-4 text-brand-600" />
-              {COMPANY_CONTENT.phones[0].display}
-            </a>
-            <a
-              href={`tel:${COMPANY_CONTENT.phones[1].raw}`}
-              className="flex items-center gap-2 p-3 rounded-lg bg-slate-50 text-slate-800 font-bold"
-            >
-              <Phone className="w-4 h-4 text-brand-600" />
-              {COMPANY_CONTENT.phones[1].display}
+              <span>Call: {COMPANY_CONTENT.phones[0].display}</span>
             </a>
           </div>
         </div>
