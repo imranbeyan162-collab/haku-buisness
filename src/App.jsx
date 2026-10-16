@@ -33,8 +33,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060B18] text-slate-100 flex flex-col font-sans selection:bg-brand-600 selection:text-white">
-      {/* High-Tech Glowing Navbar with Multi-Language Switcher */}
+    <div className="min-h-screen bg-[#FAFAFB] text-slate-900 flex flex-col font-sans selection:bg-[#0D6EFD] selection:text-white">
+      {/* Clean Modern Navbar with Multi-Language Switcher */}
       <Navbar 
         activePage={activePage} 
         setActivePage={setActivePage} 
@@ -43,22 +43,22 @@ export default function App() {
         t={t}
       />
 
-      {/* Main Page Content with Ultra-Smooth Physics Animation */}
+      {/* Main Page Content with Ultra-Smooth Transitions */}
       <main className="flex-1 relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={`${activePage}-${currentLang}`}
-            initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -16, filter: 'blur(4px)' }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             {renderCurrentPage()}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* Corporate Luxury Footer */}
+      {/* Clean Corporate Footer */}
       <Footer setActivePage={setActivePage} t={t} />
     </div>
   );
