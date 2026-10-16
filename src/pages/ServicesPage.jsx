@@ -1,134 +1,165 @@
 import React from 'react';
-import { Factory, Sparkles, CheckCircle2, Users, ArrowRight, ShieldCheck, Gauge, Sliders } from 'lucide-react';
-import { COMPANY_CONTENT } from '../data/companyContent';
+import { Factory, Sparkles, CheckCircle2, Users, ArrowRight, ShieldCheck, Gauge, Sliders, Layers } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-export default function ServicesPage({ setActivePage }) {
+export default function ServicesPage({ setActivePage, t }) {
   return (
-    <div className="page-enter py-6 sm:py-10 px-4 sm:px-8 max-w-6xl mx-auto space-y-10 sm:space-y-14">
+    <div className="py-8 sm:py-14 px-4 sm:px-8 max-w-6xl mx-auto space-y-12 sm:space-y-16">
       
       {/* Page Header */}
-      <div className="text-center max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-50 text-brand-700 text-xs font-bold uppercase tracking-wider mb-2">
-          <Factory className="w-3.5 h-3.5 text-brand-600" />
-          <span>Our Services</span>
-        </div>
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-          Services, Machinery & Customers
-        </h1>
-        <p className="text-slate-600 text-xs sm:text-sm mt-2">
-          {COMPANY_CONTENT.subtitle} • {COMPANY_CONTENT.location}
+      <div className="text-center max-w-3xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-4"
+        >
+          <Factory className="w-3.5 h-3.5 text-cyan-400" />
+          <span>{t.nav.services}</span>
+        </motion.div>
+        
+        <motion.h1 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-3xl sm:text-5xl font-black text-white tracking-tight"
+        >
+          {t.nav.services} & <span className="text-gradient-cyan">Industrial Infrastructure</span>
+        </motion.h1>
+        
+        <p className="text-slate-400 text-xs sm:text-sm mt-3">
+          {t.subtitle} • {t.location}
         </p>
       </div>
 
       {/* 4. Our Core Services */}
       <section className="space-y-6">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-600 block mb-1">
-            Section 4
+          <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 block mb-1">
+            {t.coreServices.sectionBadge}
           </span>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            {COMPANY_CONTENT.coreServices.title}
+          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            {t.coreServices.title}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {COMPANY_CONTENT.coreServices.services.map((service, index) => (
-            <div
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+          {t.coreServices.services.map((service, index) => (
+            <motion.div
               key={index}
-              className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 hover:border-brand-400 transition-all flex flex-col justify-between"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="glass-panel glass-panel-hover rounded-3xl p-6 sm:p-8 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="w-8 h-8 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center font-bold text-xs">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="w-9 h-9 rounded-xl bg-brand-500/20 text-brand-300 border border-brand-500/30 flex items-center justify-center font-bold text-xs">
                     0{index + 1}
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-slate-100 text-slate-600">
-                    Service
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/5 text-cyan-300 border border-white/10">
+                    Industrial Core
                   </span>
                 </div>
 
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3">
+                <h3 className="text-lg sm:text-xl font-black text-white mb-4">
                   {service.name}
                 </h3>
 
-                <ul className="space-y-2.5">
+                <ul className="space-y-3">
                   {service.points.map((point, ptIdx) => (
-                    <li key={ptIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-brand-600 shrink-0 mt-0.5" />
+                    <li key={ptIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
                       <span>{point}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-brand-600">
-                <span>Haku Standard Service</span>
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-cyan-400">
+                <span>Haku Commercial Standard</span>
                 <Sparkles className="w-4 h-4" />
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* 5. Machinery and Production Capacity */}
-      <section className="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-6">
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="glass-panel rounded-3xl p-6 sm:p-10 space-y-8 border border-white/15"
+      >
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-600 block mb-1">
-            Section 5
+          <span className="text-xs font-bold uppercase tracking-wider text-brand-400 block mb-1">
+            {t.machinery.sectionBadge}
           </span>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mb-2">
-            {COMPANY_CONTENT.machinery.title}
+          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2">
+            {t.machinery.title}
           </h2>
-          <p className="text-slate-700 text-xs sm:text-sm">
-            {COMPANY_CONTENT.machinery.intro}
+          <p className="text-slate-300 text-xs sm:text-sm max-w-3xl">
+            {t.machinery.intro}
           </p>
         </div>
 
         {/* Real Factory Machinery Photograph */}
-        <div className="rounded-xl overflow-hidden shadow-sm border border-slate-200 aspect-[16/10] sm:aspect-[16/9] w-full max-h-[480px]">
+        <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl aspect-[16/10] sm:aspect-[16/9] w-full bg-dark-950">
           <img
             src="/assets/factory-machinery.jpg"
             alt="Haku Business Group Modern Grain Cleaning Machinery in Adama 03 Industry Zone"
             className="w-full h-full object-cover object-center"
           />
+          <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-dark-950 via-dark-950/60 to-transparent text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div className="text-sm sm:text-base font-bold text-white">
+                Haku Business Group Processing Facility — Adama 03 Industry Zone
+              </div>
+              <div className="text-xs text-slate-300">
+                Operating live with multi-tier screen cleaners, optical color sorters, and automated packaging.
+              </div>
+            </div>
+            <div className="px-3.5 py-1.5 rounded-lg bg-brand-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-glow-blue shrink-0">
+              8–10 MT/Hour
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-          {COMPANY_CONTENT.machinery.points.map((pt, idx) => (
-            <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-              <div className="w-8 h-8 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center mb-2 font-bold text-xs">
+          {t.machinery.points.map((pt, idx) => (
+            <div key={idx} className="p-5 rounded-2xl bg-dark-850 border border-white/10 hover:border-brand-500/40 transition-colors">
+              <div className="w-8 h-8 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center mb-3 font-bold text-xs border border-brand-500/30">
                 0{idx + 1}
               </div>
-              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
                 {pt}
               </p>
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* 6. Our Target Customers */}
-      <section className="bg-[#0B132B] text-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-800">
-        <div className="max-w-2xl mb-6">
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-400 block mb-1">
-            Section 6
+      <section className="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10">
+        <div className="max-w-2xl mb-8">
+          <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 block mb-1">
+            {t.targetCustomers.sectionBadge}
           </span>
-          <h2 className="text-xl sm:text-2xl font-black text-white mb-2">
-            {COMPANY_CONTENT.targetCustomers.title}
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
+            {t.targetCustomers.title}
           </h2>
           <p className="text-slate-300 text-xs sm:text-sm">
-            {COMPANY_CONTENT.targetCustomers.intro}
+            {t.targetCustomers.intro}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {COMPANY_CONTENT.targetCustomers.customers.map((cust, idx) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {t.targetCustomers.customers.map((cust, idx) => (
             <div
               key={idx}
-              className="p-3.5 sm:p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-start gap-2.5"
+              className="p-4 rounded-xl bg-dark-850/80 border border-white/10 flex items-start gap-3 hover:border-cyan-400/30 transition-colors"
             >
-              <CheckCircle2 className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" />
-              <span className="text-xs sm:text-sm font-semibold text-white">
+              <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+              <span className="text-xs sm:text-sm font-semibold text-slate-200">
                 {cust}
               </span>
             </div>
@@ -137,19 +168,19 @@ export default function ServicesPage({ setActivePage }) {
       </section>
 
       {/* Navigation Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/10">
         <button
           onClick={() => setActivePage('about')}
-          className="text-xs font-bold text-slate-600 hover:text-brand-600"
+          className="text-xs font-bold text-slate-400 hover:text-white"
         >
-          ← Previous: About Us
+          ← {t.nav.about}
         </button>
 
         <button
           onClick={() => setActivePage('why-us')}
-          className="w-full sm:w-auto px-6 py-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-colors"
+          className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-blue-500 hover:from-brand-500 hover:to-blue-400 text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-glow-blue transition-all"
         >
-          <span>Next: Why Us</span>
+          <span>{t.nav.whyUs}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

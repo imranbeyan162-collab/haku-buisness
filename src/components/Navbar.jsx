@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Menu, X, ArrowRight } from 'lucide-react';
-import { COMPANY_CONTENT } from '../data/companyContent';
+import { Phone, Mail, MapPin, Menu, X, ArrowRight, Globe, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Navbar({ activePage, setActivePage }) {
+export default function Navbar({ activePage, setActivePage, currentLang, setCurrentLang, t }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About Us' },
-    { id: 'services', label: 'Our Services' },
-    { id: 'why-us', label: 'Why Us' },
-    { id: 'contact', label: 'Contact Information' },
+    { id: 'home', label: t.nav.home },
+    { id: 'about', label: t.nav.about },
+    { id: 'services', label: t.nav.services },
+    { id: 'why-us', label: t.nav.whyUs },
+    { id: 'contact', label: t.nav.contact },
   ];
 
   const handleNavClick = (id) => {
@@ -19,44 +19,69 @@ export default function Navbar({ activePage, setActivePage }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const languages = [
+    { code: 'en', label: 'EN', fullName: 'English' },
+    { code: 'om', label: 'ORO', fullName: 'Afaan Oromoo' },
+    { code: 'am', label: 'አማ', fullName: 'አማርኛ' },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
-      {/* Top Operations Ribbon (Responsive & No dangling punctuation) */}
-      <div className="bg-[#0B132B] text-slate-200 text-xs py-1.5 px-4 sm:px-8 border-b border-slate-800">
+    <header className="sticky top-0 z-50 bg-[#060B18]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl transition-all">
+      {/* Top Operations Ribbon */}
+      <div className="bg-[#030712] text-slate-300 text-xs py-1.5 px-4 sm:px-8 border-b border-white/5">
         <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
           <div className="flex items-center gap-2 truncate">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
-            <span className="font-semibold text-brand-300 truncate">
-              8–10 MT/Hour Processing Plant
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span className="font-semibold text-brand-400 tracking-wide truncate">
+              {t.hero.capacityBadge}
             </span>
-            <span className="hidden md:inline text-slate-500">•</span>
-            <span className="hidden md:inline text-slate-300">
-              {COMPANY_CONTENT.location}
+            <span className="hidden md:inline text-slate-600">•</span>
+            <span className="hidden md:inline text-slate-400">
+              {t.location}
             </span>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-4 shrink-0">
+            {/* 3-Language Segmented Switcher */}
+            <div className="flex items-center bg-dark-800 rounded-lg p-0.5 border border-white/10">
+              <Globe className="w-3.5 h-3.5 text-brand-400 ml-1.5 mr-1" />
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => setCurrentLang(lang.code)}
+                  className={`px-2 py-0.5 text-[11px] font-bold rounded-md transition-all ${
+                    currentLang === lang.code
+                      ? 'bg-brand-600 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                  title={lang.fullName}
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+
             <a 
-              href={`tel:${COMPANY_CONTENT.phones[0].raw}`} 
-              className="font-bold text-white hover:text-brand-300 transition-colors flex items-center gap-1.5"
+              href={`tel:${t.phones[0].raw}`} 
+              className="font-bold text-white hover:text-brand-300 transition-colors hidden sm:flex items-center gap-1.5"
             >
               <Phone className="w-3 h-3 text-brand-400" />
-              <span>{COMPANY_CONTENT.phones[0].display}</span>
+              <span>{t.phones[0].display}</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main Corporate Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between gap-4">
+      {/* Main Header Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-6">
         
-        {/* Brand Logo & Name (Big, un-squashed and clearly visible on mobile) */}
+        {/* Brand Logo & Title */}
         <button
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-3 text-left focus:outline-none"
+          className="flex items-center gap-3.5 text-left focus:outline-none group"
         >
-          {/* Logo container with fixed aspect ratio so it is NEVER squished */}
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white border-2 border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-sm">
+          {/* Logo container with glow */}
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white border border-blue-400/30 p-1 flex items-center justify-center shrink-0 shadow-lg group-hover:border-brand-400 group-hover:shadow-glow-blue transition-all">
             <img 
               src="/assets/haku-logo.png" 
               alt="Haku Business Group Logo" 
@@ -65,104 +90,143 @@ export default function Navbar({ activePage, setActivePage }) {
           </div>
           
           <div className="flex flex-col justify-center">
-            <div className="text-base sm:text-xl font-black tracking-tight text-slate-900 leading-tight">
-              HAKU <span className="text-brand-600">BUSINESS GROUP</span>
+            <div className="text-base sm:text-xl font-black tracking-tight text-white leading-tight flex items-center gap-1.5">
+              <span>HAKU</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+                BUSINESS GROUP
+              </span>
             </div>
-            <div className="text-[10px] sm:text-xs font-semibold text-slate-500 tracking-wide uppercase">
-              Grain Cleaning & Processing
+            <div className="text-[10px] sm:text-xs font-semibold text-slate-400 tracking-wider uppercase">
+              {t.subtitle}
             </div>
           </div>
         </button>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1">
+        {/* Desktop Navigation Links with animated active indicator */}
+        <nav className="hidden lg:flex items-center gap-1 bg-dark-850/80 p-1.5 rounded-xl border border-white/10 backdrop-blur-md">
           {navItems.map((item) => {
             const isActive = activePage === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-4 py-2 text-sm font-bold transition-all duration-200 rounded-lg ${
+                className={`relative px-4 py-2 text-xs sm:text-sm font-bold transition-all duration-200 rounded-lg ${
                   isActive
-                    ? 'text-brand-600 bg-brand-50 border border-brand-200'
-                    : 'text-slate-700 hover:text-brand-600 hover:bg-slate-50'
+                    ? 'text-white'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
-                {item.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="navbar-pill"
+                    className="absolute inset-0 bg-brand-600 rounded-lg shadow-glow-blue"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
               </button>
             );
           })}
         </nav>
 
-        {/* Right CTA / Mobile Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Desktop "Commercial Inquiries" Button */}
+        {/* Right Action Button & Mobile Menu */}
+        <div className="flex items-center gap-3">
           <button
             onClick={() => handleNavClick('contact')}
-            className="hidden md:inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-lg shadow-sm transition-all"
+            className="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-brand-600 to-blue-500 hover:from-brand-500 hover:to-blue-400 text-white text-xs sm:text-sm font-extrabold px-5 py-2.5 rounded-xl shadow-glow-blue hover:shadow-lg transition-all active:scale-95"
           >
-            <span>Commercial Inquiries</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>{t.nav.commercialInquiries}</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
 
-          {/* Quick Call Icon Button for Mobile */}
+          {/* Quick Call Icon for Mobile */}
           <a
-            href={`tel:${COMPANY_CONTENT.phones[0].raw}`}
-            className="md:hidden p-2.5 rounded-lg bg-brand-50 text-brand-600 hover:bg-brand-100 transition-colors"
-            title="Call Facility Operations"
+            href={`tel:${t.phones[0].raw}`}
+            className="sm:hidden p-2.5 rounded-xl bg-dark-800 text-brand-400 border border-white/10 hover:bg-dark-750 transition-colors"
+            title={t.nav.callPlant}
             aria-label="Call Plant"
           >
             <Phone className="w-5 h-5" />
           </a>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2.5 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors border border-slate-200"
+            className="lg:hidden p-2.5 rounded-xl text-slate-200 hover:bg-white/10 transition-colors border border-white/10"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-slate-900" /> : <Menu className="w-5 h-5 text-slate-900" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer (Smooth, high contrast & easy to tap) */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 px-5 py-4 shadow-2xl animate-slide-up space-y-2">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              className={`w-full text-left px-4 py-3 rounded-lg text-sm font-bold transition-colors flex items-center justify-between ${
-                activePage === item.id
-                  ? 'bg-brand-600 text-white'
-                  : 'text-slate-800 hover:bg-slate-100'
-              }`}
-            >
-              <span>{item.label}</span>
-              <ArrowRight className="w-4 h-4 opacity-80" />
-            </button>
-          ))}
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-dark-900 border-t border-white/10 px-5 py-4 shadow-2xl space-y-3 overflow-hidden"
+          >
+            {/* Language Switcher in Mobile Drawer */}
+            <div className="flex items-center justify-between p-2 rounded-xl bg-dark-800 text-xs border border-white/5">
+              <span className="font-bold text-slate-400 flex items-center gap-1.5">
+                <Globe className="w-3.5 h-3.5 text-brand-400" />
+                Language:
+              </span>
+              <div className="flex gap-1">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => setCurrentLang(lang.code)}
+                    className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-colors ${
+                      currentLang === lang.code
+                        ? 'bg-brand-600 text-white'
+                        : 'bg-dark-750 text-slate-300'
+                    }`}
+                  >
+                    {lang.fullName}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <div className="pt-3 border-t border-slate-100 space-y-2 text-xs">
-            <button
-              onClick={() => handleNavClick('contact')}
-              className="w-full py-3 rounded-lg bg-brand-600 text-white font-bold text-sm flex items-center justify-center gap-2"
-            >
-              <span>Commercial Inquiries</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-colors flex items-center justify-between ${
+                  activePage === item.id
+                    ? 'bg-brand-600 text-white shadow-glow-blue'
+                    : 'text-slate-300 hover:bg-white/5'
+                }`}
+              >
+                <span>{item.label}</span>
+                <ArrowRight className="w-4 h-4 opacity-70" />
+              </button>
+            ))}
 
-            <a
-              href={`tel:${COMPANY_CONTENT.phones[0].raw}`}
-              className="flex items-center justify-center gap-2 p-3 rounded-lg bg-slate-100 text-slate-800 font-bold text-sm"
-            >
-              <Phone className="w-4 h-4 text-brand-600" />
-              <span>Call: {COMPANY_CONTENT.phones[0].display}</span>
-            </a>
-          </div>
-        </div>
-      )}
+            <div className="pt-3 border-t border-white/10 space-y-2 text-xs">
+              <button
+                onClick={() => handleNavClick('contact')}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-blue-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-glow-blue"
+              >
+                <span>{t.nav.commercialInquiries}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <a
+                href={`tel:${t.phones[0].raw}`}
+                className="flex items-center justify-center gap-2 p-3 rounded-xl bg-dark-800 border border-white/10 text-white font-bold text-sm"
+              >
+                <Phone className="w-4 h-4 text-brand-400" />
+                <span>Call: {t.phones[0].display}</span>
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

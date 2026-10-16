@@ -4,9 +4,18 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
+        dark: {
+          950: '#040711',
+          900: '#060B18',
+          850: '#0A1128',
+          800: '#0E1738',
+          750: '#132047',
+          700: '#1E2C5B',
+        },
         brand: {
           50: '#edf5ff',
           100: '#d7e7fe',
@@ -20,36 +29,35 @@ export default {
           900: '#103c8b',
           950: '#0a255c',
         },
-        surface: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+        accent: {
+          cyan: '#38BDF8',
+          emerald: '#10B981',
+          amber: '#F59E0B',
         }
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Noto Sans Ethiopic', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Outfit', 'Plus Jakarta Sans', 'Noto Sans Ethiopic', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 12px 36px -8px rgba(13, 110, 253, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04)',
-        'glow': '0 0 25px -4px rgba(13, 110, 253, 0.35)',
-        'pill': '0 8px 30px rgba(15, 23, 42, 0.08)',
-        'card-hover': '0 20px 40px -10px rgba(13, 110, 253, 0.12)',
+        'glow-hero': '0 0 80px -15px rgba(13, 110, 253, 0.5)',
+        'glow-blue': '0 0 40px -8px rgba(13, 110, 253, 0.4)',
+        'glow-cyan': '0 0 40px -8px rgba(56, 189, 248, 0.35)',
+        'card-dark': '0 15px 35px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08)',
+        'card-hover': '0 20px 45px -10px rgba(13, 110, 253, 0.25), 0 0 0 1px rgba(13, 110, 253, 0.3)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'pulse-subtle': 'pulseSubtle 4s ease-in-out infinite',
+        'float': 'float 5s ease-in-out infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        pulseSubtle: {
+          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
         },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-6px)' },
         }
       }
     },
